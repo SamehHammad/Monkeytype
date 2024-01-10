@@ -1,3 +1,4 @@
+
 import React from "react";
 import Chart from "./Chart";
 import ResItem from "./ResItem";
@@ -15,8 +16,7 @@ const Result = () => {
     restartTest,
     numWords,
     testTime,
-    activeTool,
-    activeSubTool,
+
   } = useTestCtx();
   const accuracy = isNaN(acc) || acc === -Infinity || acc < 0 ? 0 : acc;
   const wpmRes = isNaN(wpm) || wpm === -Infinity || wpm < 0 ? 0 : wpm;
@@ -44,10 +44,8 @@ const Result = () => {
       <div className="flex items-center">
         <div className="flex flex-col items-start font-mono whitespace-nowrap">
           <p className="text-softText  mt-4">test type</p>
-          <p className="text-md font-bold text-scoreColor">time 15</p>
           <p className="text-md font-bold text-scoreColor">{lang}</p>
-          <p className="text-md font-bold text-scoreColor">{activeTool}</p>
-          <p className="text-md font-bold text-scoreColor">{testTime} Second</p>
+          <p className="text-md font-bold text-scoreColor">time {testTime}</p>
           <p className="text-md font-bold text-scoreColor">{numWords} words</p>
         </div>
         <div className="flex w-full justify-between flex-wrap font-mono ms-20 items-end gap-4 ">

@@ -345,11 +345,11 @@ const TestProvider = ({ children }) => {
       const wordsPerMinute = (wordsPassed / testTime) * 60;
       setWpm(Math.round(wordsPerMinute));
     }
-  }, []);
+  }, [finishTest]);
   const calculateAcc = useCallback(() => {
     const acc = Math.round((correctCount * 100) / currentIndex);
     setAcc(acc);
-  }, []);
+  }, [finishTest]);
   const handleInputChange = useCallback(
     (event) => {
       const input = event.target.value;
@@ -502,5 +502,5 @@ const TestProvider = ({ children }) => {
   return <TestCtx.Provider value={values}>{children}</TestCtx.Provider>;
 };
 
-export default TestProvider;
+export default React.memo(TestProvider);
 export const useTestCtx = () => useContext(TestCtx);

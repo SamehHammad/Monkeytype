@@ -3,39 +3,45 @@ import bcrypt from "bcryptjs";
 import { User } from "./model";
 import { connectToDB } from "./connect";
 import { signIn, signOut } from "../auth";
-import toast from "react-hot-toast";
-import { revalidatePath } from "next/cache";
 export const createNewUser = async (currentState, formData) => {
   const { username, email, password, verifyEmail, verifyPassword } =
     Object.fromEntries(formData);
   try {
     connectToDB();
+    if (!email || !password || !username) {
+      return { error: "please enter all details correctly" };
+    }
+    if (!email.includes("@")) {
+      return { error: "please enter email correctly" };
+    }
     if (email !== verifyEmail) {
-      console.log("email not identical");
       return { error: "email not identical" };
     } else if (password !== verifyPassword) {
-      console.log("password not identical");
       return { error: "password not identical" };
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
-    notify();
+    return { success: "your account created successfully" };
   } catch (err) {
-    console.log("can't add new user bcs : " + err);
-    return { error: "Something went wrong: " + err };
+    return { error: "Something went wrong" };
   }
 };
-const notify = () => toast("Here is your toast.");
 
 export const authenticate = async (currentState, formData) => {
   const { email, password } = Object.fromEntries(formData);
 
   try {
+    if (!email || !password ) {
+      return { error: "please enter all details correctly" };
+    }
+    if (!email.includes("@")) {
+      return { error: "please enter email correctly" };
+    }
     await signIn("credentials", { email, password, callbackUrl: "/" });
   } catch (err) {
-    return { error: "Wrong Credentials!" + err };
+    return { error: "invalid email or password" };
   }
 };
 export const logout = async () => {
@@ -45,5 +51,4 @@ export const logout = async () => {
   } catch (err) {
     console.log("can't log out ");
   }
-  revalidatePath("/test/profile");
 };

@@ -95,7 +95,7 @@ const Nav = ({ session }) => {
           >
             {navsLeft.map((nav) => (
               <button
-                className="text-xl text-softText m-2 cursor-pointer hover:text-lightText"
+                className="text-sm sm:text-xl text-softText m-2 cursor-pointer hover:text-lightText"
                 onClick={nav.clicked ? nav.clicked : () => {}}
                 key={nav.id}
               >
@@ -113,7 +113,7 @@ const Nav = ({ session }) => {
           <button
             onClick={nav.clicked ? nav.clicked : () => {}}
             key={nav.id}
-            className="flex text-xl items-center gap-1 text-softText  cursor-pointer hover:text-lightText"
+            className="flex text-sm sm:text-xl items-center gap-1 text-softText cursor-pointer hover:text-lightText"
           >
             {nav.icon}
             <p className="hover:text-scoreColor text-sm mt-1">
@@ -123,7 +123,10 @@ const Nav = ({ session }) => {
         ))}
         {session ? (
           <form action={logout}>
-            <button className="text-xl text-softText m-2 cursor-pointer hover:text-lightText ms-2">
+            <button
+              className="text-sm sm:text-xl text-softText m-2 cursor-pointer hover:text-lightText ms-2"
+              aria-label="logOut"
+            >
               <LuLogOut />
             </button>
           </form>

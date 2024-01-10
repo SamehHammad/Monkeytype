@@ -8,6 +8,7 @@ import { IoMdRefresh } from "react-icons/io";
 import { FiRefreshCcw } from "react-icons/fi";
 import { FaEyeSlash } from "react-icons/fa";
 import { GiHistogram } from "react-icons/gi";
+import toast, { Toaster } from "react-hot-toast";
 
 const Settings = () => {
   const [diff, setDiff] = useState("normal");
@@ -18,6 +19,7 @@ const Settings = () => {
 
   return (
     <div className="min-h-screen text-softText font-mono">
+      <Toaster />
       <div className="flex md:flex-row xs:flex-col items-center gap-5 font-mono">
         <SetContent
           cont={
@@ -55,16 +57,8 @@ const Settings = () => {
           icon={<FiRefreshCcw />}
         />
         <div className="w-full flex justify-between gap-2 md:mt-12">
-          <SetBtn
-            ev={"don't"}
-            setActiveTab={setRepeat}
-            activeTab={repeat}
-          />{" "}
-          <SetBtn
-            ev={"repeat"}
-            setActiveTab={setRepeat}
-            activeTab={repeat}
-          />
+          <SetBtn ev={"don't"} setActiveTab={setRepeat} activeTab={repeat} />{" "}
+          <SetBtn ev={"repeat"} setActiveTab={setRepeat} activeTab={repeat} />
         </div>
       </div>
       <div className="flex md:flex-row xs:flex-col items-center gap-5 font-mono">
@@ -89,20 +83,16 @@ const Settings = () => {
           icon={<GiHistogram />}
         />
         <div className="w-full flex justify-between gap-2 md:mt-12">
-          <SetBtn
-            ev={"manual"}
-            setActiveTab={setCommand}
-            activeTab={command}
-          />
-          <SetBtn
-            ev={"auto"}
-            setActiveTab={setCommand}
-            activeTab={command}
-          />
+          <SetBtn ev={"manual"} setActiveTab={setCommand} activeTab={command} />
+          <SetBtn ev={"auto"} setActiveTab={setCommand} activeTab={command} />
         </div>
       </div>
-      <div className="flex w-full justify-center mt-12">
-        <Button children={"Save"} costumStyle={"w-[50%]"} />
+      <div className="flex w-full justify-center mt-12 ">
+        <Button
+          children={"Save"}
+          costumStyle={"w-[50%] focus:bg-scoreColor focus:text-bg2Color"}
+          handleClick={() => toast.success("All Changes Saved Successfully")}
+        />
       </div>
     </div>
   );
