@@ -1,3 +1,4 @@
+import React from "react";
 import { useTestCtx } from "../../context/TestContext";
 
 const Tools = () => {
@@ -46,4 +47,4 @@ const Tools = () => {
   );
 };
 
-export default Tools;
+export default React.memo(Tools);

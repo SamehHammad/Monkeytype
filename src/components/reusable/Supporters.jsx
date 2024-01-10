@@ -13,4 +13,4 @@ const Supporters = ({ head, desc }) => {
   );
 };
 
-export default Supporters;
+export default React.memo(Supporters);

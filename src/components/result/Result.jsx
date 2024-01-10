@@ -1,8 +1,8 @@
 import React from "react";
-import Chart from "@/app/components/result/Chart";
-import ResItem from "@/app/components/result/ResItem";
-import Ad from "@/app/components/result/Ad";
-import { resIcons } from "@/app/lib/icons";
+import Chart from "./Chart";
+import ResItem from "./ResItem";
+import Ad from "./Ad";
+import { resIcons } from "../../lib/icons";
 import { useTestCtx } from "../../context/TestContext";
 import Link from "next/link";
 
@@ -76,7 +76,7 @@ const Result = () => {
         ))}
       </div>
       <div className="flex w-full justify-center text-xl items-center text-softText gap-2 mt-8 font-mono">
-        <Link href={"/test/login"}>
+        <Link href={"/test/profile"}>
           <p className="underline">Sign in</p>{" "}
         </Link>
         <p>to save your result</p>
@@ -88,4 +88,4 @@ const Result = () => {
   );
 };
 
-export default Result;
+export default React.memo(Result);

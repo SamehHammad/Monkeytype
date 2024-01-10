@@ -2,13 +2,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoMdRefresh } from "react-icons/io";
 import { useTestCtx } from "../../context/TestContext";
-import HoldScreen from "@/app/components/reusable/HoldScreen";
 import { useAppCtx } from "../../context/AppContext";
 import { FaArrowPointer } from "react-icons/fa6";
 import Image from "next/image";
+import { useThemeCtx } from "../../context/ThemeContext";
+const HoldScreen = React.memo(React.lazy(() => import("../reusable/HoldScreen")));
 
 const TestText = () => {
-  const { showPopup } = useAppCtx();
+  const { showPopup ,crownPopup} = useAppCtx();
+  const { themePopup } = useThemeCtx();
   const [capsLockEnabled, setCapsLockEnabled] = useState(false);
 
   const {
@@ -81,7 +83,7 @@ const TestText = () => {
       setCapsLockEnabled(capsLockOn);
     };
 
-    if (!showPopup) {
+    if (!showPopup && !themePopup && !crownPopup) {
       document.addEventListener("keydown", handleKeyDown);
     }
     return () => {
@@ -165,4 +167,4 @@ const TestText = () => {
   );
 };
 
-export default TestText;
+export default React.memo(TestText);

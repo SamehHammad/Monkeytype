@@ -3,25 +3,38 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --bg-color: #323437;
+  --bg-color2: #2C2E31;
+  --score-color: #E2B714;
+  --light-text: #D1D0C5;
+  --soft-text: #646669;
+  --typoColor-color: #B94551;
+}
+*::selection {
+  background: #E2B714;
+  color: #323437;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+
+.outer-popup {
+  background-color: rgba(0, 0, 0, 0.575);
+}
+.hold{
+  background-color: rgba(128, 128, 128, 0.332);
+  width: 100%;
+}
+.cursor-blink {
+  opacity: 1;
+  animation: cursor 0.7s ease-in-out infinite;
+  transition-property: opacity;
+  transition: all 0.5s;
+}
+
+@keyframes cursor {
+  0% {
+    opacity: 1;
   }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  100% {
+    opacity: 0;
+  }
 }

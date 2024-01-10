@@ -9,11 +9,10 @@ import { IoIosColorPalette } from "react-icons/io";
 import { IoGitBranchOutline } from "react-icons/io5";
 import FooterIcon from "./FooterTab";
 import { useTestCtx } from "../../context/TestContext";
-import Popup from "../reusable/Popup";
-import { useAppCtx } from "@/app/context/AppContext";
+import { useThemeCtx } from "../../context/ThemeContext";
 const Footer = () => {
   const { isRunning } = useTestCtx();
-  const { themePopup, setThemePopup } = useAppCtx();
+  const { setThemePopup, theme,themeName } = useThemeCtx();
   const tapLeft = [
     { id: 3, text: "Contact", icon: <MdLocalPostOffice />, link: "/" },
     { id: 4, text: "Support", icon: <GiTakeMyMoney />, link: "/" },
@@ -42,7 +41,7 @@ const Footer = () => {
   const tapRight = [
     {
       id: 9,
-      text: "dark",
+      text: themeName||"dark",
       icon: <IoIosColorPalette />,
       link: "/",
       clicked: () => {
@@ -82,4 +81,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default React.memo(Footer);

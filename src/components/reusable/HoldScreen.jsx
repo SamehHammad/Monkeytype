@@ -16,4 +16,4 @@ const HoldScreen = ({children,icon}) => {
   );
 };
 
-export default HoldScreen;
+export default React.memo(HoldScreen);

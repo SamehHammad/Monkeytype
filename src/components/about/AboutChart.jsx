@@ -1,17 +1,13 @@
 "use client";
-import React, { PureComponent } from "react";
+import React from "react";
 import {
   ComposedChart,
   Line,
   Area,
   Bar,
-  Legend,
   Scatter,
   ResponsiveContainer,
-  CartesianGrid,
   XAxis,
-  YAxis,
-  Tooltip,
 } from "recharts";
 
 const data = [
@@ -59,7 +55,7 @@ const data = [
   },
 ];
 
-const AboutChart = () => {
+const AboutChart = React.memo(() => {
   return (
     <div className="w-full lg:mt-12 relative">
       <ResponsiveContainer width="100%" height={300}>
@@ -79,6 +75,6 @@ const AboutChart = () => {
       </ResponsiveContainer>
     </div>
   );
-};
+});
 
 export default AboutChart;

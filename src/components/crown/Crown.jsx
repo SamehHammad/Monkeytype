@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import TypingTestTable from "./TypingTestTable";
-import Laoding from "@/app/components/reusable/Laoding";
-import { users } from "@/app/lib/users";
+import Laoding from "../reusable/Laoding";
+import { users } from "../..//lib/users";
 import Lang from "../lang/Lang";
-import { useTestCtx } from "@/app/context/TestContext";
+import { useTestCtx } from "../../context/TestContext";
 
 const Crown = () => {
-  const [userData, setUserData] = useState(users);
+  const [userData] = useState(users);
   const [dataIsHere, setdataIsHere] = useState(false);
   const { lang } = useTestCtx();
   const sortedUserData = [...userData].sort((a, b) => b.wpm - a.wpm);
 
-  const [activeTab, setActiveTab] = useState("all"); // Track active tab
+  const [activeTab, setActiveTab] = useState("all"); 
 
   useEffect(() => {
     setTimeout(() => {
@@ -62,4 +62,4 @@ const Crown = () => {
   );
 };
 
-export default Crown;
+export default React.memo(Crown);

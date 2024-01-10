@@ -26,4 +26,4 @@ const ShortCuts = () => {
   );
 };
 
-export default ShortCuts;
+export default React.memo(ShortCuts);

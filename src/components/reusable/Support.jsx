@@ -13,4 +13,4 @@ const Support = ({ style, icon, text }) => {
   );
 };
 
-export default Support;
+export default React.memo(Support);

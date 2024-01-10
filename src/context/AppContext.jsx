@@ -1,16 +1,16 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { createContext } from "react";
 const MyContext = createContext();
 const SplashPovider = ({ children }) => {
   const [splash, setSplash] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
   const [crownPopup, setCrownPopup] = useState(false);
-  const [themePopup, setThemePopup] = useState(false);
-  const [theme, setTheme] = useState("dark");
-  const closePopup = () => {
+  const [notifPopup, setNotifPopup] = useState(false);
+
+  const closePopup = useCallback(() => {
     setShowPopup(!showPopup);
-  };
+  }, [showPopup]);
   useEffect(() => {
     setSplash(false);
   }, []);
@@ -20,10 +20,8 @@ const SplashPovider = ({ children }) => {
         splash,
         showPopup,
         crownPopup,
-        themePopup,
-        theme,
-        setTheme,
-        setThemePopup,
+        notifPopup,
+        setNotifPopup,
         setSplash,
         setShowPopup,
         closePopup,
@@ -35,7 +33,7 @@ const SplashPovider = ({ children }) => {
   );
 };
 
-export default SplashPovider;
+export default React.memo(SplashPovider);
 export const useAppCtx = () => {
   return useContext(MyContext);
 };

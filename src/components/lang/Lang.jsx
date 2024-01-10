@@ -1,7 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Popup from "@/app/components/reusable/Popup";
-import LangSearch from "@/app/components/lang/LangSearch";
+import React, { useEffect } from "react";
+import Popup from "../reusable/Popup";
+import LangSearch from "../lang/LangSearch";
 import { MdOutlineLanguage } from "react-icons/md";
 import { useTestCtx } from "../../context/TestContext";
 import { useAppCtx } from "../../context/AppContext";
@@ -32,7 +32,10 @@ const Lang = () => {
           <Popup
             closePopup={closePopup}
             children={<LangSearch data={languages} />}
-            style={"md:w-[600px] xs:w-[85%]"}
+            style={
+              "md:w-[600px] xs:w-[85%] max-h-[75vh] min-h-[70vh] overflow-y-scroll"
+            }
+            pStyle={"items-center justify-center"}
           />
         )}
       </div>
@@ -40,4 +43,4 @@ const Lang = () => {
   );
 };
 
-export default Lang;
+export default React.memo(Lang);
