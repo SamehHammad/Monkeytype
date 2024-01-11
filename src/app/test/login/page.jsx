@@ -1,7 +1,17 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import RegisterForm from "../../../components/login/RegisterForm";
 import LoginForm from "../../../components/login/LoginForm";
+import { useAuth } from "../../../context/AuthContext";
+import { useRouter } from "next/navigation";
 const Login = () => {
+  const { currentUser } = useAuth();
+  const router = useRouter();
+  useEffect(() => {
+    if (currentUser !== null) {
+      router.push("/test/profile");
+    }
+  });
   return (
     <div className="flex w-full justify-around md:pt-2 sm:pt-10  xs:flex-col sm:flex-row xs:gap-8 sm:gap-0 items-center font-mono">
       <div className="flex flex-col ">

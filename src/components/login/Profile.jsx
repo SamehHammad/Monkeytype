@@ -1,11 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import ResItem from "./ResItem";
 import Chart from "../result/Chart";
+import { useAuth } from "../../context/AuthContext";
 
-const Profilee = ({ username, ca }) => {
-
+const Profilee = () => {
+  const { currentUserData, currentUser } = useAuth();
+  const [username, setUsername] = useState("");
+  useEffect(() => {
+    console.log(currentUserData);
+    currentUserData?.username != null
+      ? setUsername(`${currentUserData?.username}`)
+      : setUsername(currentUser?.displayName);
+  }, [currentUser, currentUserData]);
   return (
     <div className="flex flex-col items-center ">
       <div className="flex w-full bg-bg2Color p-5">
@@ -17,7 +25,7 @@ const Profilee = ({ username, ca }) => {
               <h1 className="text-lightText text-4xl ms-2 mt-3  ">
                 {username}
               </h1>
-              <p className="text-softText text-xs ms-3  ">Joined {ca}</p>
+              <p className="text-softText text-xs ms-3  ">Joined </p>
             </div>
           </div>
           <div className="flex items-center mt-5 mx-5 gap-1">
@@ -66,7 +74,6 @@ const Profilee = ({ username, ca }) => {
         />
       </div>
       <Chart />
-     
     </div>
   );
 };

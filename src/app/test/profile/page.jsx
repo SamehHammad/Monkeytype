@@ -1,17 +1,20 @@
-import React from "react";
+"use client"
+import React, { useEffect } from "react";
 import Profilee from "../../../components/login/Profile";
-import { auth } from "../../../auth";
-import { fetchUser } from "../../../lib/fetch";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../../../context/AuthContext";
 
-const Profile = async () => {
-
-  const session = await auth();
-  const user = await fetchUser(session?.user?.email);
+const Profile =  () => {
+  const { currentUser } = useAuth();
+  const router = useRouter()
+  useEffect(() => {
+    if (currentUser === null) {
+      router.push("/test/login");
+    }
+  });
   return (
     <div>
       <Profilee
-        username={user?.username}
-        ca={user?.createdAt.toString().slice(4, 15)}
       />
     </div>
   );

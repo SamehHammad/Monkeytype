@@ -5,6 +5,7 @@ import "./globals.css";
 const Navbar = React.lazy(() => import("../components/navbar/Navbar"));
 const TestProvider = React.lazy(() => import("../context/TestContext"));
 const ThemeProvider = React.lazy(() => import("../context/ThemeContext"));
+const AuthContext = React.lazy(() => import("../context/AuthContext"));
 const SplashPovider = React.lazy(() => import("../context/AppContext"));
 const ShortCuts = React.lazy(() => import("../components/shortCuts/ShortCuts"));
 const Footer = React.lazy(() => import("../components/footer/Footer"));
@@ -22,22 +23,24 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <TestProvider>
-        <SplashPovider>
-          <ThemeProvider>
-            <body className={inter.className} suppressHydrationWarning={true}>
-              <div className="w-full  min-h-screen bg-bgColor px-8 ">
-                <Navbar />
-                <div className="container min-w-full ">
-                  {children}
-                  <ShortCuts />
-                  <Footer />
+      <AuthContext>
+        <TestProvider>
+          <SplashPovider>
+            <ThemeProvider>
+              <body className={inter.className} suppressHydrationWarning={true}>
+                <div className="w-full  min-h-screen bg-bgColor px-8 ">
+                  <Navbar />
+                  <div className="container min-w-full ">
+                    {children}
+                    <ShortCuts />
+                    <Footer />
+                  </div>
                 </div>
-              </div>
-            </body>
-          </ThemeProvider>
-        </SplashPovider>
-      </TestProvider>
+              </body>
+            </ThemeProvider>
+          </SplashPovider>
+        </TestProvider>
+      </AuthContext>
     </html>
   );
 }

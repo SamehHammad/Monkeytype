@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { TiKeyboard } from "react-icons/ti";
 import { FaCrown, FaInfo, FaRegUser, FaKeyboard } from "react-icons/fa";
 import { IoMdSettings, IoIosNotifications } from "react-icons/io";
@@ -12,14 +12,20 @@ import Crown from "../crown/Crown";
 import Themes from "../theme/Themes";
 import Notifications from "../notifications/Notifications";
 import { useThemeCtx } from "../../context/ThemeContext";
-import { logout } from "../../lib/actions";
+import { useAuth } from "../../context/AuthContext";
 
-const Nav = ({ session }) => {
+const Nav = () => {
   const { splash, crownPopup, setCrownPopup, notifPopup, setNotifPopup } =
     useAppCtx();
   const { themePopup, setThemePopup } = useThemeCtx();
   const { restartTest, isRunning } = useTestCtx();
-
+  const { currentUserData, logout, currentUser } = useAuth();
+  const [username, setUsername] = useState("");
+  useEffect(() => {
+    currentUserData?.username != null
+      ? setUsername(`${currentUserData?.username}`)
+      : setUsername(currentUser?.displayName);
+  }, [currentUser, currentUserData]);
   const router = useRouter();
   const navsLeft = [
     {
@@ -63,13 +69,22 @@ const Nav = ({ session }) => {
     },
     {
       id: 6,
-      username: session && session?.user?.username,
+      username: currentUser && username,
       icon: <FaRegUser style={{ fontSize: "16px", marginTop: "5px" }} />,
       clicked: () => {
         router.push("/test/profile");
       },
     },
   ];
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      await logout();
+      router.push("/test/login");
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
   return (
     <>
       {" "}
@@ -121,17 +136,11 @@ const Nav = ({ session }) => {
             </p>
           </button>
         ))}
-        {session ? (
-          <form action={logout}>
-            <button
-              className="text-sm sm:text-xl text-softText m-2 cursor-pointer hover:text-lightText ms-2"
-              aria-label="logOut"
-            >
-              <LuLogOut />
-            </button>
-          </form>
-        ) : (
-          ""
+        {currentUser && (
+          <LuLogOut
+            className="text-sm sm:text-xl text-softText m-2 cursor-pointer hover:text-lightText ms-2"
+            onClick={handleLogout}
+          />
         )}
       </div>
       {crownPopup && (
