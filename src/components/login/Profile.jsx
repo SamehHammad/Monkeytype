@@ -22,10 +22,12 @@ const Profilee = () => {
             <FaUserCircle className="text-7xl text-softText" />
             <div className="flex flex-col">
               {" "}
-              <h1 className="text-lightText text-4xl ms-2 mt-3  ">
+              <h1 className="text-lightText text-2xl ms-2 mt-3  whitespace-nowrap">
                 {username}
               </h1>
-              <p className="text-softText text-xs ms-3  ">Joined </p>
+              <p className="text-softText text-xs ms-3  ">
+                Joined {currentUser?.metadata?.creationTime.slice(0,16)}
+              </p>
             </div>
           </div>
           <div className="flex items-center mt-5 mx-5 gap-1">
@@ -43,17 +45,17 @@ const Profilee = () => {
             <p className="text-softText text-md ms-3 whitespace-nowrap">
               tests started
             </p>
-            <p className="text-lightText text-2xl ms-3">4</p>
+            <p className="text-lightText text-2xl ms-3">1</p>
           </div>
           <div className="flex flex-col items-center ">
             <p className="text-softText text-md ms-3 whitespace-nowrap">
-              tests started
+              tests completed
             </p>
-            <p className="text-lightText text-2xl ms-3">3</p>
+            <p className="text-lightText text-2xl ms-3">0</p>
           </div>
           <div className="flex flex-col items-center">
             <p className="text-softText text-md ms-3 whitespace-nowrap">
-              time typingd
+              time typing
             </p>
             <p className="text-lightText text-2xl ms-3">00:01:29</p>
           </div>
@@ -61,16 +63,16 @@ const Profilee = () => {
       </div>
       <div className="w-full grid sm:grid-cols-2 grid-cols-1 gap-5 mt-12 mb-5">
         <ResItem
-          item1={{ n: "15 seconds", value: "-" }}
-          item2={{ n: "30 seconds", value: "-" }}
+          item1={{ n: "15 seconds", value1: "53" ,value: "92%" }}
+          item2={{ n: "30 seconds", value: "55", value1: "95%" }}
           item3={{ n: "60 seconds", value: "-" }}
           item4={{ n: "120 seconds", value: "-" }}
         />
         <ResItem
-          item1={{ n: "15 seconds", value: "-" }}
-          item2={{ n: "30 seconds", value: "-" }}
-          item3={{ n: "60 seconds", value: "-" }}
-          item4={{ n: "120 seconds", value: "-" }}
+          item1={{ n: "15 words", value1: "-" ,value: "-" }}
+          item2={{ n: "30 words", value: "50", value1: "98%" }}
+          item3={{ n: "60 words", value: "-" }}
+          item4={{ n: "120 words", value: "-" }}
         />
       </div>
       <Chart />

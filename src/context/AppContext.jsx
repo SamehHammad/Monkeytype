@@ -1,6 +1,11 @@
 "use client";
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { createContext } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  createContext,
+} from "react";
 const MyContext = createContext();
 const SplashPovider = ({ children }) => {
   const [splash, setSplash] = useState(true);

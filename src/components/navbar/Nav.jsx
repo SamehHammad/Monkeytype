@@ -22,6 +22,7 @@ const Nav = () => {
   const { currentUserData, logout, currentUser } = useAuth();
   const [username, setUsername] = useState("");
   useEffect(() => {
+    console.log(currentUser);
     currentUserData?.username != null
       ? setUsername(`${currentUserData?.username}`)
       : setUsername(currentUser?.displayName);

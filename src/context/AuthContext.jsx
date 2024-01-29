@@ -11,10 +11,9 @@ import {
   updateEmail,
   updatePassword,
 } from "firebase/auth";
-import { auth, db, fProvider, gProvider } from "../config";
+import { auth, db, gProvider } from "../config";
 import { collection, getDocs, getDoc, doc, setDoc } from "firebase/firestore";
-import { storage } from "../config";
-import { ref, getDownloadURL } from "firebase/storage";
+
 // Localization i18next
 
 const AuthContext = createContext();
@@ -25,6 +24,8 @@ const AuthProvider = ({ children }) => {
   const [currentUserData, setCurrentUserData] = useState({});
   const usersRef = collection(db, "users");
   const [userImage, setUserImage] = useState("");
+  const [LogLoading, setLogLoading] = useState(false);
+  const [LogOutLoading, setLogOutLoading] = useState(false);
 
   // get all users from fire store
   const fetchAllUsers = async () => {
@@ -143,6 +144,10 @@ const AuthProvider = ({ children }) => {
     users,
     currentUserData,
     userImage,
+    LogLoading,
+    setLogLoading,
+    LogOutLoading,
+    setLogOutLoading,
     googleSignIn,
     updateUserEmail,
     updateUserPassword,

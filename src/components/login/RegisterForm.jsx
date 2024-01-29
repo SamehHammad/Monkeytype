@@ -1,77 +1,116 @@
 "use client";
 import React, { useState } from "react";
 import { IoPersonAddSharp } from "react-icons/io5";
-import { createNewUser } from "../../lib/actions";
-import { useFormState } from "react-dom";
 import Input from "../reusable/Input";
 import Button from "../reusable/Button";
 import toast, { Toaster } from "react-hot-toast";
 import { useAuth } from "../../context/AuthContext";
-import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [emailStyle, setEmailStyle] = useState("");
+  const [passStyle, setPassStyle] = useState("");
+  const [style, setStyle] = useState("");
   const { signup } = useAuth();
+
+  const displayError = (err) => {
+    setError(err);
+    setTimeout(() => setError(""), 3000);
+  };
+
   const onSubmit = async (formData) => {
     const { username, email, password, verifyEmail, verifyPassword } =
       Object.fromEntries(formData);
     try {
-      if (!email || !password || !username) {
-        return setError("please enter all details correctly");
-      }
-      if (!email.includes("@")) {
-        return setError("please enter email correctly");
+      if (!username || !email || !password) {
+        displayError("Oops! Please fill in all the details.");
+        setStyle("border border-[red]");
       }
       if (email !== verifyEmail) {
-        return setError("email not identical");
-      } else if (password !== verifyPassword) {
-        return setError("password not identical");
+        displayError("Hmm, the email addresses don't match");
+        setEmailStyle("border border-[red]");
+        setStyle("");
+        setPassStyle("");
       }
-      await signup(username, email, password);
-      setSuccess("your account created successfully");
+      if (password !== verifyPassword) {
+        displayError("Uh-oh! The passwords don't match");
+        setEmailStyle("");
+        setStyle("");
+        setPassStyle("border border-[red]");
+      } else if (
+        email === verifyEmail &&
+        password === verifyPassword &&
+        email &&
+        password &&
+        username &&
+        email.includes("@")
+      ) {
+        await signup(username, email, password);
+        toast.success("your account created successfully");
+        setEmailStyle("");
+        setStyle("");
+        setPassStyle("");
+        setTimeout(() => {
+          toast.success("You will be logged in automatically");
+        }, 1500);
+      }
     } catch (err) {
-      return setError("Something went wrong" + err);
+      if (err.message === "Firebase: Error (auth/invalid-email).") {
+        displayError("Hold on! please enter a valid email address");
+        setEmailStyle("border border-[red]");
+        setStyle("");
+        setPassStyle("");
+      }
     }
   };
   return (
     <>
-      {error ? (
+      <Toaster />
+      {error && (
         <div
-          class="w-[250px] bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+          class=" bg-red-100 border border-red-400 text-red-700 px-2 py-2 rounded relative"
           role="alert"
         >
           <span class="block sm:inline whitespace-nowrap text-xs font-black">
             {error}
           </span>
-          <span class="absolute top-0 bottom-0 right-0 px-4 py-3"></span>
         </div>
-      ) : success ? (
-        <div
-          class="w-[250px] bg-blue-100 border-t border-b border-[lightgreen] text-[green] px-4 py-3"
-          role="alert"
-        >
-          <p class="whitespace-nowrap text-xs font-black">{success}</p>
-        </div>
-      ) : (
-        ""
       )}
+
       <form action={onSubmit} className="flex flex-col gap-2">
         <Toaster />
-        <Input placeholder={"username"} inputName={"username"} />
-        <Input placeholder={"email"} inputName={"email"} />
-        <Input placeholder={"verify email "} inputName={"verifyEmail"} />
+        <Input
+          placeholder={"username"}
+          inputName={"username"}
+          costumStyle={`${style}`}
+        />
+        <Input
+          placeholder={"email"}
+          inputName={"email"}
+          costumStyle={`${style} ${emailStyle}`}
+        />
+        <Input
+          placeholder={"verify email "}
+          inputName={"verifyEmail"}
+          costumStyle={`${style} ${emailStyle}`}
+        />
         <Input
           placeholder={"password"}
           type={"password"}
           inputName={"password"}
+          costumStyle={`${style} ${passStyle}`}
         />
         <Input
           placeholder={"verify password"}
           type={"password"}
           inputName={"verifyPassword"}
+          costumStyle={`${style} ${passStyle}`}
         />
-        <Button children={"Sign Up"} icon={<IoPersonAddSharp />} />
+        <Button
+          children={"Sign Up"}
+          icon={<IoPersonAddSharp />}
+          costumStyle={"w-[250px]"}
+        />
       </form>
     </>
   );
